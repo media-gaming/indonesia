@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gameplay Neon GOD MODE</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before {
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle, rgba(0,255,255,0.15) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:moveBg 10s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveBg {
+    from {transform:translateY(0);}
+    to {transform:translateY(40px);}
+}
+
+/* COVER */
+.cover {
+    position:relative;
+    height:180px;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    box-shadow:0 0 20px rgba(0,255,255,0.3);
+}
+
+/* EFEK GELAP */
+.cover::after {
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+}
+
+/* PROFILE */
+.profile {
+    position:absolute;
+    bottom:-40px;
+    left:20px;
+    display:flex;
+    align-items:center;
+    z-index:2;
+}
+
+.profile img {
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:3px solid #00ffff;
+    box-shadow:0 0 15px #00ffff;
+}
+
+.profile h2 {
+    margin-left:10px;
+    text-shadow:0 0 10px #00ffff;
+}
+
+.space { height:50px; }
+
+/* BANNER LAMA */
+.banner {
+    margin:15px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 0 25px #00ffff;
+    animation:pulse 2s infinite;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.banner img {
+    height:60px;
+    width:auto;
+}
+
+/* 🔥 BANNER BARU (PC ONLY) */
+.banner-wrap {
+    display:none;
+}
+
+@media (min-width: 900px) {
+
+    .banner {
+        display:none;
+    }
+
+    .banner-wrap {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        max-width:1200px;
+        margin:25px auto;
+        padding:0 40px;
+    }
+
+    .banner-left,
+    .banner-right {
+        width:512px;
+        height:60px;
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow:0 0 25px #00ffff;
+        animation:pulse 2s infinite;
+    }
+
+    .banner-left img,
+    .banner-right img {
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+    }
+}
+
+/* FIX HP */
+@media (max-width:600px) {
+    .banner {
+        height:auto;
+    }
+    .banner img {
+        width:100%;
+        height:auto;
+    }
+}
+
+@keyframes pulse {
+    0% {box-shadow:0 0 10px #00ffff;}
+    50% {box-shadow:0 0 30px #00ffff;}
+    100% {box-shadow:0 0 10px #00ffff;}
+}
+
+/* CARD */
+.card {
+    background: linear-gradient(145deg,#0f172a,#1e293b);
+    border-radius:15px;
+    margin:20px 15px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 0 15px rgba(0,255,255,0.2);
+    transition:0.3s;
+}
+/* 🔥 NEON GESER (SHINE EFFECT) */
+.card::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(0,255,255,0.5),
+        transparent
+    );
+    transform:skewX(-20deg);
+    transition:0.7s;
+    pointer-events:none;
+}
+
+/* 🔥 AKTIF SAAT HOVER (PC) */
+.card:hover::before {
+    left:120%;
+}
+
+.card:hover {
+    transform:scale(1.02);
+    box-shadow:0 0 30px rgba(0,255,255,0.6);
+}
+
+/* VIDEO */
+.video-wrapper {
+    padding:10px;
+    background:black;
+}
+
+.video-wrapper video {
+    width:100%;
+    height:auto;
+    max-height:260px;
+    object-fit:contain;
+    border-radius:10px;
+}
+
+/* CONTENT */
+.content {
+    padding:10px 15px 20px;
+    text-align:center;
+}
+
+.content h3 {
+    margin:10px 0 15px;
+    font-size:16px;
+}
+
+/* BUTTON GROUP */
+.btn-group {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+/* BUTTON */
+.btn {
+    flex:1;
+    max-width:140px;
+    padding:10px 0;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:14px;
+    text-align:center;
+    color:white;
+    background:linear-gradient(90deg,#00c853,#00e676);
+    box-shadow:0 0 10px #00ff88;
+}
+
+.btn.main {
+    background:linear-gradient(90deg,#ff9800,#ff5722);
+    box-shadow:0 0 10px #ff9800;
+}
+
+/* FOOTER */
+.footer {
+    text-align:center;
+    padding:20px;
+    opacity:0.6;
+}
+
+/* GRID */
+@media (min-width: 900px) {
+    #videos {
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap:20px;
+        padding:20px 40px;
+        max-width:1200px;
+        margin:auto;
+    }
+    .card {
+        margin:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="cover" id="coverImg">
+    <div class="profile">
+        <img id="profileImg" src="">
+        <h2 id="nama"></h2>
+    </div>
+</div>
+
+<div class="space"></div>
+
+<!-- BANNER LAMA (MOBILE) -->
+<a href="https://link-kamu.com" target="_blank">
+    <div class="banner">
+        <img id="bannerImg" src="">
+    </div>
+</a>
+
+<!-- BANNER BARU (PC) -->
+<div class="banner-wrap">
+    <a href="https://link-kamu.com" target="_blank" class="banner-left">
+        <img id="bannerLeft" src="">
+    </a>
+
+    <a href="https://link-kamu.com" target="_blank" class="banner-right">
+        <img id="bannerRight" src="">
+    </a>
+</div>
+
+<div id="videos"></div>
+
+<div class="footer">© 2026 Benihtoto</div>
+
+<script>
+document.getElementById("profileImg").src = "https://pakdesquad.rest/benihtoto/favicon-benihtoto.png";
+document.getElementById("nama").innerText = "BENIHTOTO";
+
+document.getElementById("coverImg").style.backgroundImage =
+"url('https://pbs.twimg.com/profile_banners/1923783550807298048/1777054179/600x200')";
+
+document.getElementById("bannerImg").src =
+"https://www.image2url.com/r2/default/gifs/1777156857009-31dbbb6d-9e0b-45d8-9956-f7efba63f31e.gif";
+
+/* 🔥 BANNER PC */
+document.getElementById("bannerLeft").src =
+"https://imgme.pro/images/banner.gif";
+
+document.getElementById("bannerRight").src =
+"https://imgme.pro/images/banner.gif";
+
+/* VIDEO */
+const dataVideo = [
+{
+    title: "MAXWIN MAHJONG WINS 3 ⚡",
+    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+},
+{
+    title: "MAXWIN MERMAID'S TREASURE ⚡",
+    link: "https://www.image2url.com/r2/default/videos/1777211207532-e7ababc4-91e9-4bdd-9fb7-7c6092c21ee1.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+},
+{
+    title: "BELUM DI UPLOAD BRO BAY ⚡",
+    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+},
+{
+    title: "BELUM DI UPLOAD BRO BAY ⚡",
+    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+},
+{
+    title: "BELUM DI UPLOAD BRO BAY ⚡",
+    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+},
+{
+    title: "BELUM DI UPLOAD BRO BAY",
+    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    daftar: "https://userid.vip/fbads7",
+    main: "https://userid.vip/fbads7"
+}
+];
+
+const container = document.getElementById("videos");
+
+dataVideo.forEach(v => {
+    container.innerHTML += `
+    <div class="card">
+        <div class="video-wrapper">
+            <video controls src="${v.link}"></video>
+        </div>
+        <div class="content">
+            <h3>${v.title}</h3>
+            <div class="btn-group">
+                <a href="${v.daftar}" target="_blank" class="btn">DAFTAR</a>
+                <a href="${v.main}" target="_blank" class="btn main">MAIN</a>
+            </div>
+        </div>
+    </div>
+    `;
+});
+// 🔥 AUTO STOP + NEON AKTIF
+document.addEventListener("play", function(e) {
+
+    document.querySelectorAll("video").forEach(v => {
+        if (v !== e.target) {
+            v.pause();
+            v.parentElement.classList.remove("active");
+        }
+    });
+
+    // aktifkan neon di video yang play
+    e.target.parentElement.classList.add("active");
+
+}, true);
+</script>
+
+</body>
+</html>
