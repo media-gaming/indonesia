@@ -4,6 +4,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -325,6 +326,33 @@ body::before {
     from {transform:rotate(0);}
     to {transform:rotate(360deg);}
 }
+/* 🔥 POPUP ANIMATION */
+#popupClick {
+    opacity:0;
+    transform:scale(0.8);
+    transition:all 0.3s ease;
+}
+
+#popupClick.show {
+    display:flex;
+    opacity:1;
+    transform:scale(1);
+}
+
+.popup-box {
+    animation:popupIn 0.4s ease;
+}
+
+@keyframes popupIn {
+    0% {
+        transform:translateY(40px) scale(0.7);
+        opacity:0;
+    }
+    100% {
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+}
 </style>
 </head>
 
@@ -460,6 +488,37 @@ document.addEventListener("play", function(e) {
     e.target.parentElement.classList.add("active");
 
 }, true);
+// 🔥 POPUP CLICK EFFECT
+document.addEventListener("click", function(e) {
+
+    const btn = e.target.closest(".btn");
+    if (!btn) return;
+
+    e.preventDefault(); // stop langsung pindah
+
+    const link = btn.getAttribute("href");
+    const popup = document.getElementById("popupClick");
+
+    popup.style.display = "flex";
+
+    // kasih class animasi
+    setTimeout(() => {
+        popup.classList.add("show");
+    }, 10);
+
+    // delay sebelum pindah
+    setTimeout(() => {
+        window.open(link, "_blank");
+
+        // reset popup
+        popup.classList.remove("show");
+
+        setTimeout(() => {
+            popup.style.display = "none";
+        }, 300);
+
+    }, 800);
+});
 </script>
 <div id="popupClick">
     <div class="popup-box">
