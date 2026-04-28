@@ -73,8 +73,6 @@ body::before {
     overflow:hidden;
     transition:height 0.5s ease;
 }
-}
-}
 
 /* EFEK GELAP */
 .cover::after {
@@ -748,13 +746,33 @@ document.addEventListener("click", function(e) {
     }, 800);
 });
 /* 🔥 SCROLL HALUS */
-window.addEventListener("scroll", function() {
-    const cover = document.getElementById("coverImg");
+const cover = document.getElementById("coverImg");
 
-    if (window.scrollY > 60) {
-        cover.classList.add("scrolled");
-    } else {
-        cover.classList.remove("scrolled");
+let lastScroll = 0;
+let ticking = false;
+
+window.addEventListener("scroll", function () {
+    lastScroll = window.scrollY;
+
+    if (!ticking) {
+        window.requestAnimationFrame(function () {
+
+            // batas scroll (biar smooth)
+            let maxScroll = 150;
+            let progress = Math.min(lastScroll / maxScroll, 1);
+
+            // tinggi awal & akhir
+            let startHeight = window.innerWidth <= 600 ? window.innerWidth : 280;
+            let endHeight = 110;
+
+            let newHeight = startHeight - (startHeight - endHeight) * progress;
+
+            cover.style.height = newHeight + "px";
+
+            ticking = false;
+        });
+
+        ticking = true;
     }
 });
 </script>
