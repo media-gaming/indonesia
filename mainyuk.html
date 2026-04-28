@@ -5,13 +5,15 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gameplay Neon GOD MODE</title>
+<title>Gameplay Benihtoto</title>
+<link rel="apple-touch-icon" href="https://www.image2url.com/r2/default/images/1777404849718-650dba46-433c-433b-9e68-4d6f5d3ba493.png">
 
 <style>
 /* 🔥 BADGE TOP HIJAU SIMPLE */
@@ -352,6 +354,58 @@ body::before {
         transform:translateY(0) scale(1);
         opacity:1;
     }
+}
+/* 🔥 ANIMASI TOMBOL HIDUP */
+.btn {
+    position:relative;
+    overflow:hidden;
+    animation:btnFloat 2.5s ease-in-out infinite, btnGlow 2s infinite;
+}
+
+/* 🔥 FLOAT NAIK TURUN HALUS */
+@keyframes btnFloat {
+    0% {transform:translateY(0);}
+    50% {transform:translateY(-4px);}
+    100% {transform:translateY(0);}
+}
+
+/* 🔥 GLOW HIDUP */
+@keyframes btnGlow {
+    0% {box-shadow:0 0 8px rgba(0,255,136,0.5);}
+    50% {box-shadow:0 0 18px rgba(0,255,136,1);}
+    100% {box-shadow:0 0 8px rgba(0,255,136,0.5);}
+}
+
+/* 🔥 KHUSUS TOMBOL MAIN (ORANGE) */
+.btn.main {
+    animation:btnFloat 2.5s ease-in-out infinite, btnGlowMain 2s infinite;
+}
+
+@keyframes btnGlowMain {
+    0% {box-shadow:0 0 8px rgba(255,152,0,0.5);}
+    50% {box-shadow:0 0 18px rgba(255,152,0,1);}
+    100% {box-shadow:0 0 8px rgba(255,152,0,0.5);}
+}
+.btn::after {
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:50%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transform:skewX(-20deg);
+    animation:shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {left:-100%;}
+    100% {left:150%;}
 }
 </style>
 </head>
