@@ -41,7 +41,7 @@
 }
 body {
     font-family:Arial;
-    background:#0061aa;
+    background: radial-gradient(circle at center, #0061aa 0%, #001f3f 100%);
     color:white;
     overflow-x:hidden;
 }
@@ -66,11 +66,14 @@ body::before {
 /* COVER */
 .cover {
     position:relative;
-    height:180px;
-    background-size:cover;
+    height:280px;
+    background-size:100% auto; /* 🔥 ini kuncinya */
     background-position:center;
     background-repeat:no-repeat;
-    box-shadow:0 0 20px rgba(0,255,255,0.3);
+    overflow:hidden;
+    transition:height 0.5s ease;
+}
+}
 }
 
 /* EFEK GELAP */
@@ -407,16 +410,187 @@ body::before {
     0% {left:-100%;}
     100% {left:150%;}
 }
+/* ❄️ SALJU + ANGIN */
+.snow {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.snow span {
+    position:absolute;
+    top:-10px;
+    color:white;
+    font-size:14px;
+    opacity:0.8;
+    animation:saljuAngin linear infinite;
+}
+
+/* ❄️ GERAK JATUH + GOYANG */
+@keyframes saljuAngin {
+    0% {
+        transform:translate(0, 0);
+        opacity:0;
+    }
+    10% {
+        opacity:1;
+    }
+    25% {
+        transform:translate(-10px, 25vh);
+    }
+    50% {
+        transform:translate(10px, 50vh);
+    }
+    75% {
+        transform:translate(-15px, 75vh);
+    }
+    100% {
+        transform:translate(10px, 110vh);
+        opacity:0;
+    }
+}
+/* 🔥 COVER HALUS TANPA ZOOM */
+.cover {
+    position:relative;
+    height:280px;
+    overflow:hidden;
+    transition:height 0.5s ease, background 0.5s ease;
+}
+
+/* overlay cinematic */
+.cover::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    z-index:1;
+    transition:0.5s ease;
+}
+
+/* PROFILE CENTER */
+.profile {
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    flex-direction:column;
+    text-align:center;
+    z-index:2;
+    transition:0.5s ease;
+}
+
+.profile img {
+    width:90px;
+    height:90px;
+    border-radius:50%;
+}
+
+/* 🔥 BRAND TEXT */
+.brand {
+    margin-top:10px;
+}
+
+.brand h2 {
+    margin:5px 0;
+    font-size:20px;
+}
+
+.brand p {
+    font-size:12px;
+    opacity:0.7;
+}
+
+/* 🔥 SOSMED */
+.socials {
+    margin-top:10px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.socials a {
+    width:35px;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    color:white;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.socials a:nth-child(1){background:#E1306C;} /* IG */
+.socials a:nth-child(2){background:#25D366;} /* WA */
+.socials a:nth-child(3){background:#1877F2;} /* FB */
+
+.socials a:hover {
+    transform:translateY(-3px);
+}
+
+/* 🔥 SCROLL HALUS (NO ZOOM) */
+.cover.scrolled {
+    height:120px;
+}
+
+.cover.scrolled .profile {
+    bottom:10px;
+}
+
+/* 🔥 MOBILE 1:1 */
+@media (max-width:600px){
+    .cover {
+        height:100vw;
+    }
+}
+
+/* 🔥 PC RAPIH */
+@media (min-width:900px){
+    .cover {
+        max-width:1200px;
+        margin:auto;
+        border-radius:15px;
+    }
+}
 </style>
 </head>
 
 <body>
+<div class="snow">
+<span style="left:20%; font-size:10px; animation-duration:7s;">❄</span>
+<span style="left:50%; font-size:18px; animation-duration:15s;">❄</span>
+<span style="left:70%; font-size:12px; animation-duration:9s;">❄</span>
+    <span style="left:5%; animation-duration:8s;">❄</span>
+    <span style="left:15%; animation-duration:10s;">❄</span>
+    <span style="left:25%; animation-duration:12s;">❄</span>
+    <span style="left:35%; animation-duration:9s;">❄</span>
+    <span style="left:45%; animation-duration:11s;">❄</span>
+    <span style="left:55%; animation-duration:13s;">❄</span>
+    <span style="left:65%; animation-duration:10s;">❄</span>
+    <span style="left:75%; animation-duration:14s;">❄</span>
+    <span style="left:85%; animation-duration:9s;">❄</span>
+    <span style="left:95%; animation-duration:12s;">❄</span>
+</div>
 
 <div class="cover" id="coverImg">
     <div class="profile">
-        <img id="profileImg" src="">
+    <img id="profileImg" src="">
+
+    <div class="brand">
         <h2 id="nama"></h2>
+        <p>@benihtoto</p>
     </div>
+
+    <div class="socials">
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    </div>
+</div>
 </div>
 
 <div class="space"></div>
@@ -448,7 +622,7 @@ document.getElementById("profileImg").src = "https://www.image2url.com/r2/defaul
 document.getElementById("nama").innerText = "BENIHTOTO";
 
 document.getElementById("coverImg").style.backgroundImage =
-"url('https://pbs.twimg.com/profile_banners/1923783550807298048/1777054179/600x200')";
+"url('https://i1.sndcdn.com/artworks-76HPDX1v2TxJg3Q0-lvwoBA-t240x240.jpg')";
 
 document.getElementById("bannerImg").src =
 "https://www.image2url.com/r2/default/gifs/1777156857009-31dbbb6d-9e0b-45d8-9956-f7efba63f31e.gif";
@@ -572,6 +746,16 @@ document.addEventListener("click", function(e) {
         }, 300);
 
     }, 800);
+});
+/* 🔥 SCROLL HALUS */
+window.addEventListener("scroll", function() {
+    const cover = document.getElementById("coverImg");
+
+    if (window.scrollY > 60) {
+        cover.classList.add("scrolled");
+    } else {
+        cover.classList.remove("scrolled");
+    }
 });
 </script>
 <div id="popupClick">
