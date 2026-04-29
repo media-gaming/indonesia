@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -13,7 +15,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gameplay Benihtoto</title>
-<link rel="apple-touch-icon" href="https://www.image2url.com/r2/default/images/1777404849718-650dba46-433c-433b-9e68-4d6f5d3ba493.png">
+<link rel="apple-touch-icon" href="https://www.image2url.com/r2/default/images/1777487535480-838e3e40-b748-43a6-9e85-1ff7db057f2e.jpeg">
 
 <style>
 /* 🔥 BADGE TOP HIJAU SIMPLE */
@@ -66,33 +68,37 @@ body::before {
 /* COVER */
 .cover {
     position:relative;
-    height:280px;
-    background-size:100% auto; /* 🔥 ini kuncinya */
+    width:100%;
+    aspect-ratio:16/9; /* 🔥 jadi 16:9 */
+    background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
     overflow:hidden;
-    transition:height 0.5s ease;
 }
 
 /* EFEK GELAP */
 .cover::after {
     content:"";
     position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+    inset:0;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,   /* atas terang */
+        rgba(0,0,0,0.3) 40%,
+        rgba(0,0,0,0.85) 100% /* bawah gelap */
+    );
 }
 
 /* PROFILE */
 .profile {
     position:absolute;
-    bottom:-40px;
     left:20px;
+    bottom:1px;
     display:flex;
     align-items:center;
-    z-index:2;
+    gap:12px;
+    z-index:5;
+    flex-wrap:nowrap; /* 🔥 WAJIB */
 }
 
 .profile img {
@@ -108,7 +114,7 @@ body::before {
     text-shadow:0 0 10px #00ffff;
 }
 
-.space { height:50px; }
+.space { height:100px; }
 
 /* BANNER LAMA */
 .banner {
@@ -464,21 +470,57 @@ body::before {
     content:"";
     position:absolute;
     inset:0;
-    background:linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    background:linear-gradient(to bottom, rgba(0 0 0 / 0%), rgba(0,0,0,0.9));
     z-index:1;
     transition:0.5s ease;
 }
 
-/* PROFILE CENTER */
+/* 🔥 PROFILE GAYA FACEBOOK */
 .profile {
     position:absolute;
-    left:50%;
-    bottom:20px;
-    transform:translateX(-50%);
+    left:1px;
+    bottom:1px;
+    display:flex;
+    align-items:center; /* 🔥 WAJIB */
+    gap:1px;
+    z-index:5;
+}
+
+/* FOTO */
+.profile img {
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:4px solid #020617; /* tetap ada garis */
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+    background:#000;
+    flex-shrink:0; /* 🔥 penting biar gak gepeng / ketekan */
+}
+
+/* TEXT */
+.brand {
+    display:flex;
     flex-direction:column;
-    text-align:center;
-    z-index:2;
-    transition:0.5s ease;
+    justify-content:flex-end;
+}
+
+/* NAMA */
+.brand h2 {
+    font-size:18px;
+    margin:0;
+}
+
+/* USERNAME */
+.brand p {
+    font-size:12px;
+    opacity:0.7;
+    margin:2px 0 6px;
+}
+
+/* SOSMED */
+.socials {
+    display:flex;
+    gap:8px;
 }
 
 .profile img {
@@ -487,27 +529,34 @@ body::before {
     border-radius:50%;
 }
 
-/* 🔥 BRAND TEXT */
+/* 🔥 BRAND FIX (BIAR GA TURUN) */
 .brand {
-    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    margin:0;
+    margin-right:10px;
 }
 
 .brand h2 {
-    margin:5px 0;
-    font-size:20px;
+    margin:0;
+    font-size:18px;
+    line-height:1.2;
 }
 
 .brand p {
+    margin:2px 0;
     font-size:12px;
     opacity:0.7;
 }
 
-/* 🔥 SOSMED */
+/* 🔥 SOSMED FIX (SEJAJAR SAMPING) */
 .socials {
-    margin-top:10px;
     display:flex;
-    justify-content:center;
-    gap:10px;
+    align-items:center;
+    gap:8px;
+    margin-left:30px;
+    flex-shrink:0; /* 🔥 tambahan biar gak jatuh */
 }
 
 .socials a {
@@ -539,13 +588,6 @@ body::before {
     bottom:10px;
 }
 
-/* 🔥 MOBILE 1:1 */
-@media (max-width:600px){
-    .cover {
-        height:100vw;
-    }
-}
-
 /* 🔥 PC RAPIH */
 @media (min-width:900px){
     .cover {
@@ -553,6 +595,49 @@ body::before {
         margin:auto;
         border-radius:15px;
     }
+}
+.cover {
+    width:100%;
+}
+.video-wrapper {
+    position:relative;
+    cursor:pointer;
+}
+
+/* sembunyikan control awal */
+.video-wrapper video {
+    pointer-events:none;
+}
+
+/* tombol play tengah */
+.play-btn {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    font-size:50px;
+    color:white;
+    background:rgba(0,0,0,0.5);
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:5;
+}
+
+/* saat aktif (sudah diklik) */
+.video-wrapper.active video {
+    pointer-events:auto;
+}
+
+.video-wrapper.active .play-btn {
+    display:none;
+}
+video {
+    will-change: transform;
+    backface-visibility: hidden;
 }
 </style>
 </head>
@@ -580,7 +665,7 @@ body::before {
 
     <div class="brand">
         <h2 id="nama"></h2>
-        <p>@benihtoto</p>
+        <p>Situs Slot Gacor Indonesia</p>
     </div>
 
     <div class="socials">
@@ -616,11 +701,11 @@ body::before {
 <div class="footer">© 2026 Benihtoto</div>
 
 <script>
-document.getElementById("profileImg").src = "https://www.image2url.com/r2/default/images/1777404849718-650dba46-433c-433b-9e68-4d6f5d3ba493.png";
+document.getElementById("profileImg").src = "https://www.image2url.com/r2/default/images/1777487535480-838e3e40-b748-43a6-9e85-1ff7db057f2e.jpeg";
 document.getElementById("nama").innerText = "BENIHTOTO";
 
 document.getElementById("coverImg").style.backgroundImage =
-"url('https://i1.sndcdn.com/artworks-76HPDX1v2TxJg3Q0-lvwoBA-t240x240.jpg')";
+"url('https://www.image2url.com/r2/default/images/1777488172377-df5d26bb-a0ca-4795-8c71-8ee6ba678cd6.jpeg')";
 
 document.getElementById("bannerImg").src =
 "https://www.image2url.com/r2/default/gifs/1777156857009-31dbbb6d-9e0b-45d8-9956-f7efba63f31e.gif";
@@ -653,8 +738,8 @@ const dataVideo = [
     main: "https://userid.vip/fbads7"
 },
 {
-    title: "BELUM JADI",
-    link: "https://www.image2url.com/r2/default/videos/1777157679778-8516ecfb-70d3-493a-a344-a4a9c66a3da3.mp4",
+    title: "GATES OF OLYMPUS 1000",
+    link: "https://www.image2url.com/r2/default/videos/1777497627296-948a3f54-89b9-4653-9581-464af6476789.mov",
     daftar: "https://userid.vip/fbads7",
     main: "https://userid.vip/fbads7"
 },
@@ -684,8 +769,16 @@ dataVideo.forEach(v => {
     </div>
 
     <div class="video-wrapper">
-        <video controls src="${v.link}"></video>
-    </div>
+    <div class="play-btn"><i class="fas fa-play"></i></div>
+    <video 
+    src="${v.link}" 
+    preload="metadata"
+    playsinline
+    webkit-playsinline
+    muted
+    loading="lazy"
+></video>
+</div>
         <div class="content">
             <h3>${v.title}</h3>
             <div class="btn-group">
@@ -745,35 +838,71 @@ document.addEventListener("click", function(e) {
 
     }, 800);
 });
-/* 🔥 SCROLL HALUS */
-const cover = document.getElementById("coverImg");
+// 🔥 custom play (klik wrapper)
+document.addEventListener("click", function(e){
 
-let lastScroll = 0;
-let ticking = false;
+    const wrapper = e.target.closest(".video-wrapper");
+    if(!wrapper) return;
 
-window.addEventListener("scroll", function () {
-    lastScroll = window.scrollY;
+    const video = wrapper.querySelector("video");
 
-    if (!ticking) {
-        window.requestAnimationFrame(function () {
+    // pause video lain
+    document.querySelectorAll("video").forEach(v => {
+        if(v !== video){
+            v.pause();
+            v.parentElement.classList.remove("active");
+        }
+    });
 
-            // batas scroll (biar smooth)
-            let maxScroll = 150;
-            let progress = Math.min(lastScroll / maxScroll, 1);
+    // aktifkan video ini
+    wrapper.classList.add("active");
 
-            // tinggi awal & akhir
-            let startHeight = window.innerWidth <= 600 ? window.innerWidth : 280;
-            let endHeight = 110;
+    video.setAttribute("controls", true);
+    video.play();
 
-            let newHeight = startHeight - (startHeight - endHeight) * progress;
+});
+// 🔥 LAZY LOAD VIDEO (ANTI LAG SCROLL)
+const videos = document.querySelectorAll("video");
 
-            cover.style.height = newHeight + "px";
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const video = entry.target;
 
-            ticking = false;
-        });
+            if (!video.src) {
+                video.src = video.dataset.src;
+            }
 
-        ticking = true;
-    }
+            observer.unobserve(video);
+        }
+    });
+}, {
+    rootMargin: "100px"
+});
+
+videos.forEach(video => {
+    video.dataset.src = video.src;
+    video.removeAttribute("src");
+    observer.observe(video);
+});
+// 🔥 FIX iPHONE AUTO LOAD
+document.querySelectorAll("video").forEach(v => {
+    v.load();
+});
+// 🔥 PAUSE VIDEO DI LUAR LAYAR
+const observerPause = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        const video = entry.target;
+
+        if (!entry.isIntersecting) {
+            video.pause();
+            video.parentElement.classList.remove("active");
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll("video").forEach(v => {
+    observerPause.observe(v);
 });
 </script>
 <div id="popupClick">
