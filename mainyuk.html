@@ -639,6 +639,10 @@ video {
     will-change: transform;
     backface-visibility: hidden;
 }
+/* 🔥 FIX VIDEO iPHONE */
+video {
+    transform: translateZ(0);
+}
 </style>
 </head>
 
@@ -739,7 +743,7 @@ const dataVideo = [
 },
 {
     title: "GATES OF OLYMPUS 1000",
-    link: "https://www.image2url.com/r2/default/videos/1777497627296-948a3f54-89b9-4653-9581-464af6476789.mov",
+    link: "https://www.image2url.com/r2/default/videos/1777497627296-948a3f54-89b9-4653-9581-464af6476789.mp4",
     daftar: "https://userid.vip/fbads7",
     main: "https://userid.vip/fbads7"
 },
@@ -882,9 +886,22 @@ const observer = new IntersectionObserver(entries => {
 
 videos.forEach(video => {
     video.dataset.src = video.src;
-    video.removeAttribute("src");
+
+    // 🔥 KHUSUS iPHONE JANGAN HAPUS SRC
+    if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        video.removeAttribute("src");
+    }
+
     observer.observe(video);
 });
+// 🔥 FIX KHUSUS iPHONE
+if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    document.querySelectorAll("video").forEach(v => {
+        v.setAttribute("playsinline", "");
+        v.setAttribute("webkit-playsinline", "");
+        v.load();
+    });
+}
 // 🔥 FIX iPHONE AUTO LOAD
 document.querySelectorAll("video").forEach(v => {
     v.load();
