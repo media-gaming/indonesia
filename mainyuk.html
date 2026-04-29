@@ -643,6 +643,9 @@ video {
 video {
     transform: translateZ(0);
 }
+video {
+    transform: translateZ(0);
+}
 </style>
 </head>
 
@@ -700,6 +703,9 @@ video {
     </a>
 </div>
 
+<video controls playsinline muted>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+</video>
 <div id="videos"></div>
 
 <div class="footer">© 2026 Benihtoto</div>
@@ -775,13 +781,13 @@ dataVideo.forEach(v => {
     <div class="video-wrapper">
     <div class="play-btn"><i class="fas fa-play"></i></div>
     <video 
-    src="${v.link}" 
     preload="metadata"
     playsinline
     webkit-playsinline
     muted
-    loading="lazy"
-></video>
+>
+    <source src="${v.link}" type="video/mp4">
+</video>
 </div>
         <div class="content">
             <h3>${v.title}</h3>
@@ -862,7 +868,13 @@ document.addEventListener("click", function(e){
     wrapper.classList.add("active");
 
     video.setAttribute("controls", true);
-    video.play();
+    video.setAttribute("controls", true);
+video.muted = true;
+
+video.load(); // 🔥 WAJIB
+video.play().catch(() => {
+    console.log("Klik lagi untuk play");
+});
 
 });
 // 🔥 LAZY LOAD VIDEO (ANTI LAG SCROLL)
@@ -873,9 +885,12 @@ const observer = new IntersectionObserver(entries => {
         if (entry.isIntersecting) {
             const video = entry.target;
 
-            if (!video.src) {
-                video.src = video.dataset.src;
-            }
+            const source = video.querySelector("source");
+
+if (!source.src) {
+    source.src = video.dataset.src;
+    video.load(); // 🔥 WAJIB
+}
 
             observer.unobserve(video);
         }
@@ -885,11 +900,13 @@ const observer = new IntersectionObserver(entries => {
 });
 
 videos.forEach(video => {
-    video.dataset.src = video.src;
+    const source = video.querySelector("source");
 
-    // 🔥 KHUSUS iPHONE JANGAN HAPUS SRC
+    video.dataset.src = source.src;
+
+    // 🔥 iPHONE JANGAN DIHAPUS
     if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        video.removeAttribute("src");
+        source.removeAttribute("src");
     }
 
     observer.observe(video);
@@ -921,6 +938,15 @@ const observerPause = new IntersectionObserver(entries => {
 document.querySelectorAll("video").forEach(v => {
     observerPause.observe(v);
 });
+// 🔥 FIX KHUSUS iPHONE
+if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    document.querySelectorAll("video").forEach(v => {
+        v.setAttribute("playsinline", "");
+        v.setAttribute("webkit-playsinline", "");
+        v.muted = true;
+        v.load();
+    });
+}
 </script>
 <div id="popupClick">
     <div class="popup-box">
