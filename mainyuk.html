@@ -566,7 +566,7 @@ body::before {
 
 /* sembunyikan control awal */
 .video-wrapper video {
-    pointer-events:none;
+    pointer-events:auto;
 }
 
 /* tombol play tengah */
@@ -809,7 +809,6 @@ const btn = wrapper.querySelector(".play-btn");
 if (btn) btn.style.display = "none";
 
 // baru aktifkan video
-video.setAttribute("controls", true);
 video.play();
 
 });
