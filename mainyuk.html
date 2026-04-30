@@ -724,7 +724,7 @@ dataVideo.forEach(v => {
 
     <div class="video-wrapper">
     <div class="play-btn"><i class="fas fa-play"></i></div>
-    <video src="${v.link}"></video>
+    <video controls src="${v.link}"></video>
 </div>
         <div class="content">
             <h3>${v.title}</h3>
@@ -822,6 +822,9 @@ document.addEventListener("pause", function(e){
         btn.style.display = "flex";
     }
 }, true);
+document.querySelectorAll("video").forEach(v => {
+    v.setAttribute("controls", "controls");
+});
 </script>
 <div id="popupClick">
     <div class="popup-box">
