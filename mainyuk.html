@@ -8,6 +8,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -565,9 +566,6 @@ body::before {
 }
 
 /* sembunyikan control awal */
-.video-wrapper video {
-    pointer-events:none;
-}
 
 /* tombol play tengah */
 .play-btn {
@@ -607,6 +605,24 @@ body::after {
     height:100%;
     background:rgba(0,0,0,0.5);
     z-index:-1;
+}
+.video-wrapper video {
+    width:100%;
+    height:auto;
+    max-height:260px;
+    object-fit:contain;
+    border-radius:10px;
+    pointer-events:auto;
+}
+
+/* overlay play hanya blok klik, bukan video */
+.play-btn {
+    pointer-events:none;
+}
+
+/* lock hanya overlay bukan video */
+.video-wrapper.active .play-btn {
+    display:none;
 }
 </style>
 </head>
@@ -740,20 +756,54 @@ dataVideo.forEach(v => {
     </div>
     `;
 });
-// 🔥 AUTO STOP + NEON AKTIF
-document.addEventListener("play", function(e) {
-
+// 🔥 STEP 1: MATIKAN CONTROLS SEMUA VIDEO SAAT LOAD
+setTimeout(() => {
     document.querySelectorAll("video").forEach(v => {
-        if (v !== e.target) {
+        v.removeAttribute("controls");
+    });
+}, 0);
+// 🔥 AUTO STOP + NEON AKTIF
+// 🔥 FUNCTION STOP SEMUA VIDEO (ANTI BUG)
+function stopAllVideos(currentVideo){
+    document.querySelectorAll("video").forEach(v => {
+
+        if(v !== currentVideo){
             v.pause();
+            v.currentTime = 0;
             v.parentElement.classList.remove("active");
+
+            // 🔥 STEP 2: HILANGKAN CONTROLS VIDEO LAIN
+            v.removeAttribute("controls");
+
+            const btn = v.parentElement.querySelector(".play-btn");
+            if(btn) btn.style.display = "flex";
         }
     });
+}
+// 🔥 CLICK PLAY CUSTOM (FINAL FIX)
+document.addEventListener("click", function(e){
 
-    // aktifkan neon di video yang play
-    e.target.parentElement.classList.add("active");
+    const wrapper = e.target.closest(".video-wrapper");
+    if(!wrapper) return;
 
-}, true);
+    const video = wrapper.querySelector("video");
+
+    stopAllVideos(video);
+
+    document.querySelectorAll(".video-wrapper").forEach(w => {
+        w.classList.remove("active");
+    });
+
+    wrapper.classList.add("active");
+
+    const btn = wrapper.querySelector(".play-btn");
+    if(btn) btn.style.display = "none";
+
+    video.setAttribute("controls", "controls");
+    video.setAttribute("playsinline", "true");
+
+    video.play();
+});
 // 🔥 POPUP CLICK EFFECT
 document.addEventListener("click", function(e) {
 
@@ -785,42 +835,19 @@ document.addEventListener("click", function(e) {
 
     }, 800);
 });
-// 🔥 custom play (klik wrapper)
-document.addEventListener("click", function(e){
-
-    const wrapper = e.target.closest(".video-wrapper");
-    if(!wrapper) return;
-
-    const video = wrapper.querySelector("video");
-
-    // pause video lain
-    document.querySelectorAll("video").forEach(v => {
-        if(v !== video){
-            v.pause();
-            v.parentElement.classList.remove("active");
-        }
-    });
-
-    // aktifkan video ini
-    wrapper.classList.add("active");
-
-// 🔥 sembunyikan tombol play dulu (fix double)
-const btn = wrapper.querySelector(".play-btn");
-if (btn) btn.style.display = "none";
-
-// baru aktifkan video
-video.setAttribute("controls", true);
-video.play();
-
-});
 // reset play button saat video pause
 document.addEventListener("pause", function(e){
-    const wrapper = e.target.parentElement;
+    const video = e.target;
+    const wrapper = video.parentElement;
     const btn = wrapper.querySelector(".play-btn");
 
     if(btn){
         btn.style.display = "flex";
     }
+
+    // 🔥 STEP 4: hilangkan controls saat pause
+    video.removeAttribute("controls");
+
 }, true);
 </script>
 <div id="popupClick">
