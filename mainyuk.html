@@ -565,20 +565,10 @@ body::before {
 }
 
 /* sembunyikan control awal */
-.video-wrapper {
-    position:relative;
-    overflow:hidden;
+.video-wrapper video {
+    pointer-events:none;
 }
 
-.video-wrapper video {
-    width:100%;
-    height:auto;
-    max-height:260px;
-    object-fit:contain;
-    border-radius:10px;
-    position:relative;
-    z-index:1;
-}
 /* tombol play tengah */
 .play-btn {
     position:absolute;
@@ -594,8 +584,7 @@ body::before {
     display:flex;
     align-items:center;
     justify-content:center;
-    z-index:2;
-    pointer-events:none;
+    z-index:5;
 }
 
 /* saat aktif (sudah diklik) */
@@ -820,21 +809,12 @@ const btn = wrapper.querySelector(".play-btn");
 if (btn) btn.style.display = "none";
 
 // baru aktifkan video
-video.setAttribute("controls", "controls");
-video.play().catch(()=>{});
+video.setAttribute("controls", true);
+video.play();
 
 });
 // reset play button saat video pause
-document.querySelectorAll("video").forEach(video => {
-    video.addEventListener("pause", function () {
-        const wrapper = this.parentElement;
-        const btn = wrapper.querySelector(".play-btn");
-
-        if(btn){
-            btn.style.display = "flex";
-        }
-    });
-});
+document.addEventListener("pause", function(e){
     const wrapper = e.target.parentElement;
     const btn = wrapper.querySelector(".play-btn");
 
