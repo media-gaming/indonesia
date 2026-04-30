@@ -43,26 +43,29 @@
 }
 body {
     font-family:Arial;
-    background: radial-gradient(circle at center, #0061aa 0%, #001f3f 100%);
+    background-color:#000; /* fallback */
     color:white;
     overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* 🔥 BACKGROUND PC */
 body::before {
     content:"";
     position:fixed;
-    width:100%;
-    height:100%;
-    background:radial-gradient(circle, rgba(0,255,255,0.15) 1px, transparent 1px);
-    background-size:40px 40px;
-    animation:moveBg 10s linear infinite;
-    z-index:-1;
+    inset:0;
+    background:url('https://www.image2url.com/r2/default/images/1777565703123-c965aa1e-607a-4531-946d-51699e454041.png') no-repeat center center;
+    background-size:cover;
+    background-position:center;
+    z-index:-2;
 }
 
-@keyframes moveBg {
-    from {transform:translateY(0);}
-    to {transform:translateY(40px);}
+/* 🔥 BACKGROUND MOBILE */
+@media (max-width: 768px){
+    body::before {
+        background:url('https://www.image2url.com/r2/default/images/1777565729466-17d5fc5c-7078-4af4-8fdd-0b13bc949ff9.png') no-repeat center top;
+        background-size:cover;
+        background-position:center top;
+    }
 }
 
 /* COVER */
@@ -231,7 +234,7 @@ body::before {
 
 /* VIDEO */
 .video-wrapper {
-    padding:2px;
+    padding:0px;
     background:dark blue;
 }
 
@@ -414,49 +417,6 @@ body::before {
     0% {left:-100%;}
     100% {left:150%;}
 }
-/* ❄️ SALJU + ANGIN */
-.snow {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    z-index:-1;
-}
-
-.snow span {
-    position:absolute;
-    top:-10px;
-    color:white;
-    font-size:14px;
-    opacity:0.8;
-    animation:saljuAngin linear infinite;
-}
-
-/* ❄️ GERAK JATUH + GOYANG */
-@keyframes saljuAngin {
-    0% {
-        transform:translate(0, 0);
-        opacity:0;
-    }
-    10% {
-        opacity:1;
-    }
-    25% {
-        transform:translate(-10px, 25vh);
-    }
-    50% {
-        transform:translate(10px, 50vh);
-    }
-    75% {
-        transform:translate(-15px, 75vh);
-    }
-    100% {
-        transform:translate(10px, 110vh);
-        opacity:0;
-    }
-}
 /* 🔥 COVER HALUS TANPA ZOOM */
 .cover {
     position:relative;
@@ -638,25 +598,20 @@ body::before {
 video::-webkit-media-controls-overlay-play-button {
     display:none !important;
 }
+body::after {
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    z-index:-1;
+}
 </style>
 </head>
 
 <body>
-<div class="snow">
-<span style="left:20%; font-size:10px; animation-duration:7s;">❄</span>
-<span style="left:50%; font-size:18px; animation-duration:15s;">❄</span>
-<span style="left:70%; font-size:12px; animation-duration:9s;">❄</span>
-    <span style="left:5%; animation-duration:8s;">❄</span>
-    <span style="left:15%; animation-duration:10s;">❄</span>
-    <span style="left:25%; animation-duration:12s;">❄</span>
-    <span style="left:35%; animation-duration:9s;">❄</span>
-    <span style="left:45%; animation-duration:11s;">❄</span>
-    <span style="left:55%; animation-duration:13s;">❄</span>
-    <span style="left:65%; animation-duration:10s;">❄</span>
-    <span style="left:75%; animation-duration:14s;">❄</span>
-    <span style="left:85%; animation-duration:9s;">❄</span>
-    <span style="left:95%; animation-duration:12s;">❄</span>
-</div>
 
 <div class="cover" id="coverImg">
     <div class="profile">
